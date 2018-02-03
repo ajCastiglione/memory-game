@@ -14,15 +14,15 @@ $(function() {
   let endTracker = [];
 
   const endModal = $('.endModal-container');
-  // Inertval to keep track of time spent
 
-  const interv = window.setInterval(function() {
+  // Inertval to keep track of time spent
+  function Timer() {
     timer++;
-  }, 1000);
-  interv;
+  }
+
+  let myTimer = window.setInterval(Timer, 1000);
 
   //selectedCard object to handle functions
-
   const selectedCard = {
     show: function(card) {
       return card.addClass('open show');
@@ -80,9 +80,18 @@ $(function() {
     }
   }
 
-  // Function to show the game is over
+  // Adding up the moves
+  function moveCounter(curCard) {
+    if (curCard.hasClass('match')) return;
+    else {
+      moves++
+      movesDiv.html(moves);
+    }
+  }
+
+  // Displays when the game is over
   function endGame() {
-    window.clearInterval(interv);
+    window.clearInterval(myTimer);
     let endTime = timer;
     let timeHtml = $('#timeLocation');
     let movesHtml = $('#moveLocation');
@@ -92,38 +101,32 @@ $(function() {
     endModal.fadeIn(300);
   }
 
-  // Event listener for a card being clicked
+  // Event listener for a card being clicked on
   deck.on('click', 'li', function() {
     openCards($(this));
     selectedCard.show($(this));
     if (currentCards.length > 1) {
       checkIfSame($(this));
     }
-    if($(this).hasClass('matched')) return;
-    else {
-      moves++
-    }
-    movesDiv.html(moves);
+    moveCounter($(this));
     if (endTracker.length === 16) return endGame();
   });
 
-  restart.on('click', function() {
+  // reseting the Game
+  function resetGame() {
     selectedCard.hideAll(cards);
     currentCards = [];
     timer = 0;
     moves = 0;
     movesDiv.html(moves);
     endTracker = [];
-  });
+    endModal.fadeOut(300);
+    myTimer = window.setInterval(Timer, 1000);
+  }
 
-  resetBtn.on('click', function() {
-    selectedCard.hideAll(cards);
-    currentCards = [];
-    timer = 0;
-    moves = 0;
-    movesDiv.html(moves);
-    endTracker = [];
-  });
+  restart.on('click', resetGame);
+
+  resetBtn.on('click', resetGame);
 
   close.on('click', function() {
     endModal.fadeOut(300);
