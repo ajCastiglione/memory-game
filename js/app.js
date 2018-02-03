@@ -75,7 +75,7 @@ $(function() {
         selectedCard.hideOpen(newCard);
         selectedCard.hideOpen(currentCards[0]);
         currentCards = [];
-      }, 500);
+      }, 350);
 
     }
   }
