@@ -6,6 +6,9 @@ $(function() {
   const movesDiv = $('.moves');
   const close = $(".close-modal");
   const resetBtn = $('#resetBtn');
+  const star = $('<li><i class="fa fa-star"></i></li>');
+  const TwoStars = $('<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>');
+  const stars = $('.stars');
 
   let moves = 0;
   let timer = 0;
@@ -86,6 +89,9 @@ $(function() {
     else {
       moves++
       movesDiv.html(moves);
+
+      moves > 12 ? stars.html(TwoStars) : stars
+      moves > 20 ? stars.html(star) : stars
     }
   }
 
