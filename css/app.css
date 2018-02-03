@@ -170,8 +170,7 @@ h1 {
 
 #resetBtn {
   display: inline-block;
-  color: #02ccba;
-  text-shadow: 1px 1px 1px #000;
+  color: #fff;
   text-decoration: none;
   text-transform: capitalize;
   padding: 1em;
@@ -183,5 +182,4 @@ h1 {
 
 #resetBtn:hover {
 background-color: #02ccba;
-color: #fff;
 }
