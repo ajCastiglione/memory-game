@@ -1,23 +1,28 @@
 /*
  * Create a list that holds all of your cards
  */
+const deck = $('.deck');
 const cards = $('.card');
-console.log(cards);
+const restart = $('#resetGame');
+let timer = 0;
+let currentCards = [];
+// Inertval to keep track of time spent
 
-//card object to list properties
+/*setInterval(function() {
+  timer++;
+}, 1000);*/
+
+
+//card object to handle functions
 
 const card = {
-  show: function (card) {
+  show: function(card) {
     return card.addClass('open show');
   },
-  hide: function (card) {
-    return card.removeClass('open show');
+  hide: function(card) {
+    return card.removeClass('open show match');
   }
 }
-
-cards.on('click', function() {
-  card.show($(this));
-});
 
 /*
  * Display the cards on the page
@@ -28,23 +33,42 @@ cards.on('click', function() {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
+  let currentIndex = array.length,
+    temporaryValue, randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
 
-    return array;
+  return array;
 }
 
+shuffle(cards); // randomizing the cards locations
+deck.empty(); // emptying the deck
+deck.html(cards); // inserting the new order of cards into the deck
+
+function openCards(card) {
+  if (card.hasClass('open')) return false;
+  currentCards.push(card);
+  console.log(currentCards)
+
+  if (currentCards.length = 2) {}
+
+}
+
+// Event listener for a card being clicked
+deck.on('click', 'li', function() {
+  openCards($(this));
+  card.show($(this));
+});
 
 /*
  * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  - display the card's symbol (put this functionality in another function that you call from this one) - done
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
@@ -52,3 +76,9 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+restart.on('click', function() {
+  card.hide(cards);
+  timer = 0;
+});
