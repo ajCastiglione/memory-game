@@ -5,19 +5,21 @@ $(function() {
   const restart = $('#resetGame');
   const movesDiv = $('.moves');
   const close = $(".close-modal");
+  const resetBtn = $('#resetBtn');
 
   let moves = 0;
   let timer = 0;
   let matchedCards = 0;
   let currentCards = [];
+  let endTracker = [];
 
   const endModal = $('.endModal-container');
   // Inertval to keep track of time spent
 
-  setInterval(function() {
+  const interv = window.setInterval(function() {
     timer++;
   }, 1000);
-
+  interv;
 
   //selectedCard object to handle functions
 
@@ -59,13 +61,13 @@ $(function() {
   function openCards(currentCard) {
     if (currentCard.hasClass('open') || currentCard.hasClass('match')) return false;
     currentCards.push(currentCard);
-    console.log(currentCards);
   }
 
   function checkIfSame(newCard) {
     if (newCard.html() == currentCards[0].html()) {
       selectedCard.match(newCard);
       selectedCard.match(currentCards[0]);
+      endTracker.push(newCard, currentCards[0]);
       currentCards = [];
     } else {
       selectedCard.show(newCard);
@@ -80,11 +82,14 @@ $(function() {
 
   // Function to show the game is over
   function endGame() {
+    window.clearInterval(interv);
     let endTime = timer;
     let timeHtml = $('#timeLocation');
     let movesHtml = $('#moveLocation');
 
-
+    movesHtml.html(`You finished the game in ${moves} moves!`);
+    timeHtml.html(`It took you ${timer} seconds.`);
+    endModal.fadeIn(300);
   }
 
   // Event listener for a card being clicked
@@ -94,29 +99,13 @@ $(function() {
     if (currentCards.length > 1) {
       checkIfSame($(this));
     }
-    moves++;
-    movesDiv.html(moves);
-
-    for(card of cards) {
-      if( card.hasClass('match') ) {
-        matchedCards++;
-      }
+    if($(this).hasClass('matched')) return;
+    else {
+      moves++
     }
-
-    if(matchedCards == cards.length) return endGame();
+    movesDiv.html(moves);
+    if (endTracker.length === 16) return endGame();
   });
-
-  /*
-   * set up the event listener for a card. If a card is clicked:
-   *  - display the card's symbol (put this functionality in another function that you call from this one) - done
-   *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one) -done
-   *  - if the list already has another card, check to see if the two cards match - done
-   *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one) - done
-   *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one) - done
-   *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
-   *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
-   */
-
 
   restart.on('click', function() {
     selectedCard.hideAll(cards);
@@ -124,6 +113,20 @@ $(function() {
     timer = 0;
     moves = 0;
     movesDiv.html(moves);
+    endTracker = [];
+  });
+
+  resetBtn.on('click', function() {
+    selectedCard.hideAll(cards);
+    currentCards = [];
+    timer = 0;
+    moves = 0;
+    movesDiv.html(moves);
+    endTracker = [];
+  });
+
+  close.on('click', function() {
+    endModal.fadeOut(300);
   });
 
 });
