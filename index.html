@@ -25,7 +25,7 @@
         <li><i class="fa fa-star"></i></li>
       </ul>
 
-      <span class="moves">3</span> Moves
+      <span class="moves">0</span> Moves
 
       <div class="restart">
         <i id="resetGame" class="fa fa-repeat"></i>
@@ -82,6 +82,22 @@
         <i class="fa fa-cube"></i>
       </li>
     </ul>
+  </div>
+
+  <div class="endModal-container">
+    <div class="endModal">
+      <div class="modal-content">
+        <h2 class="modal-title">Game Over!</h2>
+        <div class="scoreAndTime">
+          <p id="moveLocation"></p>
+          <p id="timeLocation"></p>
+        </div>
+        <a href="#">Click here to restart the game</a>
+        <div class="close-modal">
+          <span>X</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="js/app.js"></script>
