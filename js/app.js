@@ -36,7 +36,7 @@ $(function() {
     hideOpen: function(card) {
       return card.removeClass('open show');
     },
-    match: function(card) {
+    matchCard: function(card) {
       return card.addClass('match');
     }
   }
@@ -68,8 +68,8 @@ $(function() {
 
   function checkIfSame(newCard) {
     if (newCard.html() == currentCards[0].html()) {
-      selectedCard.match(newCard);
-      selectedCard.match(currentCards[0]);
+      selectedCard.matchCard(newCard);
+      selectedCard.matchCard(currentCards[0]);
       endTracker.push(newCard, currentCards[0]);
       currentCards = [];
     } else {
