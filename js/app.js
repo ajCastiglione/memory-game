@@ -15,12 +15,18 @@ let currentCards = [];
 
 //card object to handle functions
 
-const card = {
+const selectedCard = {
   show: function(card) {
     return card.addClass('open show');
   },
-  hide: function(card) {
+  hideAll: function(card) {
     return card.removeClass('open show match');
+  },
+  hideOpen: function(card) {
+    return card.removeClass('open show');
+  },
+  match: function(card) {
+    return card.addClass('match');
   }
 }
 
@@ -51,19 +57,39 @@ shuffle(cards); // randomizing the cards locations
 deck.empty(); // emptying the deck
 deck.html(cards); // inserting the new order of cards into the deck
 
-function openCards(card) {
-  if (card.hasClass('open')) return false;
-  currentCards.push(card);
-  console.log(currentCards)
+function openCards(currentCard) {
+  if (currentCard.hasClass('open') || currentCard.hasClass('match')) return false;
+  currentCards.push(currentCard);
+  console.log(currentCards);
+}
 
-  if (currentCards.length = 2) {}
+function checkIfSame(newCard) {
+
+  console.log('running check function');
+  if (newCard.html() == currentCards[0].html()) {
+    console.log('They match');
+    selectedCard.match(newCard);
+    selectedCard.match(currentCards[0]);
+    currentCards = [];
+  }
+
+  else {
+    selectedCard.show(newCard);
+    setTimeout(function() {
+      selectedCard.hideOpen(newCard);
+      selectedCard.hideOpen(currentCards[0]);
+      currentCards = [];
+    }, 500);
+
+  }
 
 }
 
 // Event listener for a card being clicked
 deck.on('click', 'li', function() {
   openCards($(this));
-  card.show($(this));
+  selectedCard.show($(this));
+  if (currentCards.length > 1) {checkIfSame($(this));}
 });
 
 /*
@@ -79,6 +105,7 @@ deck.on('click', 'li', function() {
 
 
 restart.on('click', function() {
-  card.hide(cards);
+  selectedCard.hideAll(cards);
+  currentCards = [];
   timer = 0;
 });
