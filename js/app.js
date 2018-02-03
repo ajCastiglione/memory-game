@@ -25,9 +25,9 @@ $(function() {
 
   let myTimer = window.setInterval(Timer, 1000);
 
-  //selectedCard object to handle functions
+  //selectedCard object to handle some basic functions
   const selectedCard = {
-    show: function(card) {
+    showCard: function(card) {
       return card.addClass('open show');
     },
     hideAll: function(card) {
@@ -66,6 +66,7 @@ $(function() {
     currentCards.push(currentCard);
   }
 
+  // Evaluate if the cards match. If they do: add match class to both, place them in a different array for the endgame. Otherwise, show what it is, then after 350ms hide both and empty the current card array
   function checkIfSame(newCard) {
     if (newCard.html() == currentCards[0].html()) {
       selectedCard.matchCard(newCard);
@@ -73,7 +74,7 @@ $(function() {
       endTracker.push(newCard, currentCards[0]);
       currentCards = [];
     } else {
-      selectedCard.show(newCard);
+      selectedCard.showCard(newCard);
       setTimeout(function() {
         selectedCard.hideOpen(newCard);
         selectedCard.hideOpen(currentCards[0]);
@@ -95,7 +96,7 @@ $(function() {
     }
   }
 
-  // Displays when the game is over
+  // Displays when the game is over. This: stops the timer, tells the user the amount of moves it took, the time they took, and fades the modal containing this information into view.
   function endGame() {
     window.clearInterval(myTimer);
     let endTime = timer;
@@ -107,10 +108,10 @@ $(function() {
     endModal.fadeIn(300);
   }
 
-  // Event listener for a card being clicked on
+  // Add listener to any card, if clicked: Adds card to open pile, shows the card clicked, if more than 1 card is in the arr it checks if they match, calls the move counter function, then checks the length of the endTracker's length to see if the game is over.
   deck.on('click', 'li', function() {
     openCards($(this));
-    selectedCard.show($(this));
+    selectedCard.showCard($(this));
     if (currentCards.length > 1) {
       checkIfSame($(this));
     }
@@ -118,7 +119,7 @@ $(function() {
     if (endTracker.length === 16) return endGame();
   });
 
-  // reseting the Game
+  // Reseting the game. This: hides all cards, empties the arrays, sets timer to 0, sets moves to 0, shows 0 in the moves spot, fades the modal out, starts the timer back up. 
   function resetGame() {
     selectedCard.hideAll(cards);
     currentCards = [];
