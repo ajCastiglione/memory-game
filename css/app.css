@@ -54,6 +54,7 @@ h1 {
 .deck .card {
     height: 125px;
     width: 125px;
+    margin: 2% 0;
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
@@ -109,6 +110,10 @@ h1 {
     cursor: pointer;
 }
 
+/*****************
+modal section
+******************/
+
 .endModal-container {
   display: none;
   width: 100%;
@@ -137,7 +142,7 @@ h1 {
 .modal-content {
   position: relative;
   top: 23%;
-  width: 50%;
+  width: 60%;
   margin: auto;
   padding: 2%;
   color: #fff;
@@ -182,4 +187,37 @@ h1 {
 
 #resetBtn:hover {
 background-color: #02ccba;
+}
+
+
+/*******************
+responsive section
+*******************/
+
+@media screen and (max-width: 768px) {
+  .deck {
+    width: 90%;
+  }
+  .score-panel {
+    width: 80%;
+  }
+  .deck .card {
+    width: 115px;
+    height: 115px;
+  }
+
+  .endModal {
+    width: 100%;
+  }
+  .modal-content {
+    width: 80%;
+  }
+}
+
+
+@media screen and (max-width: 481px) {
+  .deck .card {
+    width: 100px;
+    height: 100px;
+  }
 }
