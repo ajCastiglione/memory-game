@@ -1,7 +1,23 @@
 /*
  * Create a list that holds all of your cards
  */
+const cards = $('.card');
+console.log(cards);
 
+//card object to list properties
+
+const card = {
+  show: function (card) {
+    return card.addClass('open show');
+  },
+  hide: function (card) {
+    return card.removeClass('open show');
+  }
+}
+
+cards.on('click', function() {
+  card.show($(this));
+});
 
 /*
  * Display the cards on the page
@@ -12,7 +28,7 @@
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
