@@ -123,7 +123,8 @@ $(function() {
   });
 
   // Reseting the game. This: hides all cards, empties the arrays, sets timer to 0, sets moves to 0, shows 0 in the moves spot, fades the modal out, starts the timer back up.
-  function resetGame() {
+  function resetGame(e) {
+    e.preventDefault()
     window.clearInterval(myTimer);
     selectedCard.hideAll(cards);
     currentCards = [];
