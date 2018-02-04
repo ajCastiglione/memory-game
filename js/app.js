@@ -89,7 +89,7 @@ $(function() {
 
   // Adding up the moves
   function moveCounter(curCard) {
-    if (curCard.hasClass('match')) return;
+    if (curCard.hasClass('match') || curCard.hasClass('open')) return;
     else {
       moves++
       movesDiv.html(moves);
@@ -114,11 +114,11 @@ $(function() {
   // Add listener to any card, if clicked: Adds card to open pile, shows the card clicked, if more than 1 card is in the arr it checks if they match, calls the move counter function, then checks the length of the endTracker's length to see if the game is over.
   deck.on('click', 'li', function() {
     openCards($(this));
+    moveCounter($(this));
     selectedCard.showCard($(this));
     if (currentCards.length > 1) {
       checkIfSame($(this));
     }
-    moveCounter($(this));
     if (endTracker.length === 16) return endGame();
   });
 
