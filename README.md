@@ -5,6 +5,12 @@
 * [Instructions](#instructions)
 
 ## Instructions
-<p>This game has the functionality of the traditional memory game. To play all you have to do is simply click on any of the cards and try to match them!</p>
 
-<p>There may be some bugs I'm not yet aware of so please let me know if you see any flaws in my code</p>
+### To Start A Game
+All you have to do is wait until the page loads and then the game will begin immediately. If you need to start over just click the reset button or reload the page.
+
+### End Game
+The game will end once all cards are matched. The program accomplishes this task by keeping an array of all matched cards and then comparing the length of this array to the total amount of cards shown.
+
+### Dependencies
+The application uses HTML, CSS, JavaScript, jQuery.
