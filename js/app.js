@@ -8,6 +8,7 @@ $(function() {
   const resetBtn = $('#resetBtn');
   const star = $('<li><i class="fa fa-star"></i></li>');
   const TwoStars = $('<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>');
+  const tStars = $('<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>');
   const stars = $('.stars');
 
   let moves = 0;
@@ -20,7 +21,9 @@ $(function() {
 
   // Inertval to keep track of time spent
   function Timer() {
+    let tm = $('#time-spot');
     timer++;
+    tm.html( timer );
   }
 
   let myTimer = window.setInterval(Timer, 1000);
@@ -91,8 +94,8 @@ $(function() {
       moves++
       movesDiv.html(moves);
 
-      moves > 12 ? stars.html(TwoStars) : stars
-      moves > 20 ? stars.html(star) : stars
+      moves > 18 ? stars.html(TwoStars) : stars
+      moves > 30 ? stars.html(star) : stars
     }
   }
 
@@ -119,8 +122,9 @@ $(function() {
     if (endTracker.length === 16) return endGame();
   });
 
-  // Reseting the game. This: hides all cards, empties the arrays, sets timer to 0, sets moves to 0, shows 0 in the moves spot, fades the modal out, starts the timer back up. 
+  // Reseting the game. This: hides all cards, empties the arrays, sets timer to 0, sets moves to 0, shows 0 in the moves spot, fades the modal out, starts the timer back up.
   function resetGame() {
+    window.clearInterval(myTimer);
     selectedCard.hideAll(cards);
     currentCards = [];
     timer = 0;
@@ -129,6 +133,7 @@ $(function() {
     endTracker = [];
     endModal.fadeOut(300);
     myTimer = window.setInterval(Timer, 1000);
+    stars.html(tStars);
   }
 
   restart.on('click', resetGame);
